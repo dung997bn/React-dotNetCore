@@ -1,0 +1,4 @@
+
+dotnet ef  migrations add initialCreate
+dotnet ef  migrations add initialCreate -p Persistence/ -s API/
+dotnet watch run
