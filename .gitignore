@@ -4,3 +4,10 @@ obj
 .DS_Store
 appsettings.json
 *.db
+.vs/Reactivities/v15/.suo
+.vs/Reactivities/v15/Server/sqlite3/db.lock
+.vs/Reactivities/v15/Server/sqlite3/storage.ide
+.vs/Reactivities/v15/Server/sqlite3/storage.ide-shm
+.vs/Reactivities/v15/Server/sqlite3/storage.ide-wal
+Domain/Domain.csproj.user
+.vs/config/applicationhost.config
