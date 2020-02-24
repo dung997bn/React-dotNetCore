@@ -1,13 +1,26 @@
-import React from "react";
-import { Menu, Container } from "semantic-ui-react";
+import React from 'react';
+import { Menu, Container, Button } from 'semantic-ui-react';
 
-const NavBar = () => {
+const NavBar = ({ handleOpenCreateForm }) => {
   return (
-    <Menu fixed="top" inverted>
+    <Menu fixed='top' inverted>
       <Container>
-        <Menu.Item name="home" ></Menu.Item>
-        <Menu.Item name="messages" />
-        <Menu.Item name="friends" />
+        <Menu.Item name='home' header>
+          <img
+            src='/assets/logo.png'
+            alt='logo'
+            style={{ marginRight: '10px' }}
+          />
+          Reactivities
+        </Menu.Item>
+        <Menu.Item name='Activities' />
+        <Menu.Item>
+          <Button
+            positive
+            content='Create Activity'
+            onClick={() => handleOpenCreateForm()}
+          />
+        </Menu.Item>
       </Container>
     </Menu>
   );

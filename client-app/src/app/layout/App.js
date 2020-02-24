@@ -1,27 +1,43 @@
-import React, { Component, useState, useEffect } from "react";
-import axios from "axios";
-import { Header, Icon, List } from "semantic-ui-react";
-import NavBar from "../../features/nav/NavBar";
+import React, { useState, useEffect, Fragment } from 'react';
+import axios from 'axios';
+import { Container } from 'semantic-ui-react';
+import NavBar from '../../features/nav/NavBar';
+import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 const App = () => {
   const [activities, setActivities] = useState([]);
+  const [selectedActivity, setSelectedActivity] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/activity")
-      .then(response => {
-        setActivities(response.data);
-      });
-  },[]);
+    axios.get('http://localhost:5000/api/activity').then(response => {
+      setActivities(response.data);
+    });
+  }, []);
+
+  //function
+  const handleSelectActivity = Id => {
+    setSelectedActivity(activities.filter(a => a.Id == Id)[0]);
+  };
+
+  const handleOpenCreateForm = () => {
+    setSelectedActivity(null);
+    setEditMode(true);
+  };
 
   return (
-    <div>
-      <NavBar/>
-      <List>
-        {activities &&
-          activities.map(act => (
-            <List.Item key={act.Id}>{act.Title}</List.Item>
-          ))}
-      </List>
-    </div>
+    <Fragment>
+      <NavBar handleOpenCreateForm={handleOpenCreateForm} />
+      <Container style={{ marginTop: '7em' }}>
+        <ActivityDashboard
+          activities={activities}
+          selectActivity={handleSelectActivity}
+          selectedActivity={selectedActivity}
+          editMode={editMode}
+          setEditMode={setEditMode}
+          setSelectedActivity={setSelectedActivity}
+        />
+      </Container>
+    </Fragment>
   );
 };
 
