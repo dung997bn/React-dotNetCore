@@ -1,7 +1,7 @@
 import React from 'react';
 import { Item, Button, Label, Segment } from 'semantic-ui-react';
 
-const ActivityList = ({ activities, selectActivity }) => {
+const ActivityList = ({ activities, selectActivity, handleDeleteActivity }) => {
   return (
     <Segment clearing>
       <Item.Group divided>
@@ -25,6 +25,14 @@ const ActivityList = ({ activities, selectActivity }) => {
                     floated='right'
                     content='View'
                     color='blue'
+                  />
+                  <Button
+                    onClick={() => {
+                      handleDeleteActivity(activity.Id);
+                    }}
+                    floated='right'
+                    content='Delete'
+                    color='red'
                   />
                   <Label basic content={activity.Category} />
                 </Item.Extra>

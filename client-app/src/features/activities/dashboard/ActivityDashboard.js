@@ -1,8 +1,8 @@
-import React from "react";
-import { Grid, List } from "semantic-ui-react";
-import ActivityList from "./ActivityList";
-import ActivityDetails from "../details/ActivityDetails";
-import ActivityForm from "../form/ActivityForm";
+import React from 'react';
+import { Grid } from 'semantic-ui-react';
+import ActivityList from './ActivityList';
+import ActivityDetails from '../details/ActivityDetails';
+import ActivityForm from '../form/ActivityForm';
 const ActivityDashboard = ({
   activities,
   selectActivity,
@@ -11,12 +11,17 @@ const ActivityDashboard = ({
   setEditMode,
   setSelectedActivity,
   handleCreateActivity,
-  handleEditActivity
+  handleEditActivity,
+  handleDeleteActivity
 }) => {
   return (
     <Grid>
       <Grid.Column width={10}>
-        <ActivityList activities={activities} selectActivity={selectActivity} />
+        <ActivityList
+          activities={activities}
+          selectActivity={selectActivity}
+          handleDeleteActivity={handleDeleteActivity}
+        />
       </Grid.Column>
       <Grid.Column width={6}>
         {selectedActivity && !editMode && (
@@ -28,6 +33,7 @@ const ActivityDashboard = ({
         )}
         {editMode && (
           <ActivityForm
+            key={(selectedActivity && selectedActivity.Id) || 0}
             setEditMode={setEditMode}
             selectedActivity={selectedActivity}
             handleCreateActivity={handleCreateActivity}

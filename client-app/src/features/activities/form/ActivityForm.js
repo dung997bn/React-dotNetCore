@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Segment, Form, Button } from "semantic-ui-react";
-import { v4 as uuid } from "uuid";
+import React, { useState } from 'react';
+import { Segment, Form, Button } from 'semantic-ui-react';
+import { v4 as uuid } from 'uuid';
 
 const ActivityForm = ({
   setEditMode,
@@ -12,13 +12,13 @@ const ActivityForm = ({
     if (selectedActivity) return selectedActivity;
     else
       return {
-        Id: "",
-        Title: "",
-        Category: "",
-        Description: "",
-        Date: "",
-        City: "",
-        Venue: ""
+        Id: '',
+        Title: '',
+        Category: '',
+        Description: '',
+        Date: '',
+        City: '',
+        Venue: ''
       };
   };
 
@@ -44,49 +44,49 @@ const ActivityForm = ({
     <Segment clearing>
       <Form onSubmit={() => handleSubmit()}>
         <Form.Input
-          placeholder="Title"
-          name="Title"
+          placeholder='Title'
+          name='Title'
           value={activity.Title}
           onChange={handleInputChange}
         />
         <Form.Input
           rows={2}
-          placeholder="Description"
-          name="Description"
+          placeholder='Description'
+          name='Description'
           onChange={handleInputChange}
           value={activity.Description}
         />
         <Form.Input
-          placeholder="Category"
+          placeholder='Category'
           value={activity.Category}
-          name="Category"
+          name='Category'
           onChange={handleInputChange}
         />
         <Form.Input
-          type="date"
-          placeholder="Date"
+          type='datetime-local'
+          placeholder='Date'
           value={activity.Date}
-          name="Date"
+          name='Date'
           onChange={handleInputChange}
         />
         <Form.Input
-          placeholder="City"
+          placeholder='City'
           value={activity.City}
-          name="City"
+          name='City'
           onChange={handleInputChange}
         />
         <Form.Input
-          placeholder="Venue"
+          placeholder='Venue'
           value={activity.Venue}
-          name="Venue"
+          name='Venue'
           onChange={handleInputChange}
         />
-        <Button floated="right" positive type="submit" content="Submit" />
+        <Button floated='right' positive type='submit' content='Submit' />
         <Button
           onClick={() => setEditMode(false)}
-          floated="right"
-          type="button"
-          content="Cancel"
+          floated='right'
+          type='button'
+          content='Cancel'
         />
       </Form>
     </Segment>
