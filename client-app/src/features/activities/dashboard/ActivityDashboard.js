@@ -12,7 +12,9 @@ const ActivityDashboard = ({
   setSelectedActivity,
   handleCreateActivity,
   handleEditActivity,
-  handleDeleteActivity
+  handleDeleteActivity,
+  submitting,
+  target
 }) => {
   return (
     <Grid>
@@ -21,6 +23,8 @@ const ActivityDashboard = ({
           activities={activities}
           selectActivity={selectActivity}
           handleDeleteActivity={handleDeleteActivity}
+          submitting={submitting}
+          target={target}
         />
       </Grid.Column>
       <Grid.Column width={6}>
@@ -38,6 +42,8 @@ const ActivityDashboard = ({
             selectedActivity={selectedActivity}
             handleCreateActivity={handleCreateActivity}
             handleEditActivity={handleEditActivity}
+            submitting={submitting}
+            target={target}
           />
         )}
       </Grid.Column>
