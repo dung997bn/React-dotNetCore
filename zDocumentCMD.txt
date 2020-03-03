@@ -2,3 +2,4 @@
 dotnet ef  migrations add initialCreate
 dotnet ef  migrations add initialCreate -p Persistence/ -s API/
 dotnet watch run
+dotnet ef database drop -p Persistence -s API
