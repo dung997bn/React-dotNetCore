@@ -1,28 +1,22 @@
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useContext } from "react";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
-import { IActivity } from "../../../app/models/activity";
+import { observer } from "mobx-react-lite";
+import ActivityStore from "../../../app/stores/activityStore";
+import { Link } from "react-router-dom";
 
-interface IProps {
-  activities: IActivity[];
-  handleSelectActivity: (Id: string) => void;
-  handleDeleteActivity: (
-    e: SyntheticEvent<HTMLButtonElement>,
-    Id: string
-  ) => void;
-  submitting: boolean;
-  target: string;
-}
-const ActivityList: React.FC<IProps> = ({
-  activities,
-  handleSelectActivity,
-  handleDeleteActivity,
-  submitting,
-  target
-}) => {
+const ActivityList = () => {
+  const activityStore = useContext(ActivityStore);
+  const {
+    selectActivity,
+    activitiesByDate,
+    submitting,
+    target,
+    deleteActivity
+  } = activityStore;
   return (
     <Segment>
       <Item.Group divided>
-        {activities.map(activity => (
+        {activitiesByDate.map(activity => (
           <Item key={activity.Id}>
             <Item.Content>
               <Item.Header as="a">{activity.Title}</Item.Header>
@@ -38,7 +32,8 @@ const ActivityList: React.FC<IProps> = ({
                   floated="right"
                   content="View"
                   color="blue"
-                  onClick={() => handleSelectActivity(activity.Id)}
+                  as={Link}
+                  to={`/activities/${activity.Id}`}
                 />
                 <Button
                   floated="right"
@@ -46,7 +41,7 @@ const ActivityList: React.FC<IProps> = ({
                   color="red"
                   name={activity.Id}
                   loading={target === activity.Id && submitting}
-                  onClick={e => handleDeleteActivity(e, activity.Id)}
+                  onClick={e => deleteActivity(e, activity.Id)}
                 />
                 <Label basic content={activity.Category} />
               </Item.Extra>
@@ -58,4 +53,4 @@ const ActivityList: React.FC<IProps> = ({
   );
 };
 
-export default ActivityList;
+export default observer(ActivityList);
