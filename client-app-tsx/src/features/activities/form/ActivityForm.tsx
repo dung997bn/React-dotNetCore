@@ -20,7 +20,6 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     editActivity,
     submitting,
     activity: selectedActivity,
-    cancelFormOpen,
     loadActivityDetail,
     clearActivity
   } = activityStore;
@@ -128,7 +127,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
           floated="right"
           type="button"
           content="Cancel"
-          onClick={() => cancelFormOpen()}
+          onClick={() => history.push("/activities")}
         />
       </Form>
     </Segment>
