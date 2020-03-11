@@ -14,13 +14,12 @@ const ActivityList = () => {
           <Label key={group} size="large" color="blue">
             {group}
           </Label>
-          <Segment>
-            <Item.Group divided>
-              {activities.map(activity => (
-                <ActivityListItem key={activity.Id} activity={activity} />
-              ))}
-            </Item.Group>
-          </Segment>
+
+          <Item.Group divided>
+            {activities.map(activity => (
+              <ActivityListItem key={activity.Id} activity={activity} />
+            ))}
+          </Item.Group>
         </Fragment>
       ))}
     </Fragment>
