@@ -1,7 +1,19 @@
 import axios, { AxiosResponse } from "axios";
 import { IActivity } from "../models/activity";
+import { history } from "../..";
+import { toast } from "react-toastify";
 
 axios.defaults.baseURL = "http://localhost:5000/api";
+
+axios.interceptors.response.use(undefined, error => {
+  const { status } = error.response;
+  if (status === 404) {
+    history.push("/notfound");
+  }
+  if (status === 500) {
+    toast.error('Server error-check terminal  for more info.')
+  }
+});
 
 const responseBody = (response: AxiosResponse) => response.data;
 

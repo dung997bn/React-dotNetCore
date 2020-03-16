@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 import ActivityStore from "../../../app/stores/activityStore";
 import { observer } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router-dom";
-
+import { Form as FinalForm, Field } from "react-final-form";
 interface DetailParams {
   Id: string;
 }
@@ -51,6 +51,9 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     selectedActivity,
     activity.Id.length
   ]);
+  const handleFinalFormSubmit = (values: any) => {
+    console.log(values);
+  };
 
   const handleInputChange = (
     event: FormEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -78,6 +81,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     <Grid>
       <Grid.Column width={10}>
         <Segment clearing>
+          <FinalForm onSubmit={handleFinalFormSubmit} />
           <Form>
             <Form.Input
               placeholder="Title"
