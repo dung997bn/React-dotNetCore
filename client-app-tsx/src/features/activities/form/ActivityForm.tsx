@@ -93,6 +93,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
               name='Description'
               value={activity.Description}
               onChange={handleInputChange}
+              //ok
             />
             <Form.Input
               placeholder='Category'
