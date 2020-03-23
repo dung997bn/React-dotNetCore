@@ -1,4 +1,5 @@
 ﻿using Application.Errors;
+using Application.Interfaces;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -33,12 +34,14 @@ namespace Application.Users
         public class Handler : IRequestHandler<Query, User>
         {
             private readonly SignInManager<AppUser> _signInManager;
+            private readonly IJwtGenerator _jwtGenerator;
             private readonly UserManager<AppUser> _userManager;
 
 
-            public Handler(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager)
+            public Handler(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
             {
                 _signInManager = signInManager;
+                _jwtGenerator = jwtGenerator;
                 _userManager = userManager;
             }
 
@@ -57,7 +60,7 @@ namespace Application.Users
                     //TODO:generate token
                     return new User {
                         DisplayName=user.DisplayName,
-                        Token="",
+                        Token=_jwtGenerator.CreateToken(user),
                         UserName=user.UserName,
                         Image=""
                     };
