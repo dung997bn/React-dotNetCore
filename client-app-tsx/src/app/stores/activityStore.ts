@@ -1,6 +1,6 @@
 import { IActivity } from "./../models/activity";
-import { observable, action, computed, configure, runInAction } from "mobx";
-import { createContext, SyntheticEvent } from "react";
+import { observable, action, computed, runInAction } from "mobx";
+import { SyntheticEvent } from "react";
 import agent from "../api/agent";
 import { RootStore } from "./rootStore";
 
