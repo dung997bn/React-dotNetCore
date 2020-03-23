@@ -1,10 +1,11 @@
-import React, { useState, FormEvent, useContext, useEffect } from 'react';
-import { Segment, Form, Button, Grid } from 'semantic-ui-react';
-import { IActivity } from '../../../app/models/activity';
-import { v4 as uuid } from 'uuid';
-import ActivityStore from '../../../app/stores/activityStore';
-import { observer } from 'mobx-react-lite';
-import { RouteComponentProps } from 'react-router-dom';
+import React, { useState, FormEvent, useContext, useEffect } from "react";
+import { Segment, Form, Button, Grid } from "semantic-ui-react";
+import { IActivity } from "../../../app/models/activity";
+import { v4 as uuid } from "uuid";
+import ActivityStore from "../../../app/stores/activityStore";
+import { observer } from "mobx-react-lite";
+import { RouteComponentProps } from "react-router-dom";
+import { RootStoreContext } from "../../../app/stores/rootStore";
 interface DetailParams {
   Id: string;
 }
@@ -13,7 +14,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
   match,
   history
 }) => {
-  const activityStore = useContext(ActivityStore);
+  const rootStore = useContext(RootStoreContext);
   const {
     createActivity,
     editActivity,
@@ -21,16 +22,16 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     activity: selectedActivity,
     loadActivityDetail,
     clearActivity
-  } = activityStore;
+  } = rootStore.activityStore;
 
   const [activity, setActivity] = useState<IActivity>({
-    Id: '',
-    Title: '',
-    Category: '',
-    Description: '',
-    Date: '',
-    City: '',
-    Venue: ''
+    Id: "",
+    Title: "",
+    Category: "",
+    Description: "",
+    Date: "",
+    City: "",
+    Venue: ""
   });
 
   useEffect(() => {
@@ -82,57 +83,57 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
         <Segment clearing>
           <Form>
             <Form.Input
-              placeholder='Title'
-              name='Title'
+              placeholder="Title"
+              name="Title"
               value={activity.Title}
               onChange={handleInputChange}
             />
             <Form.TextArea
               rows={2}
-              placeholder='Description'
-              name='Description'
+              placeholder="Description"
+              name="Description"
               value={activity.Description}
               onChange={handleInputChange}
               //ok
             />
             <Form.Input
-              placeholder='Category'
-              name='Category'
+              placeholder="Category"
+              name="Category"
               value={activity.Category}
               onChange={handleInputChange}
             />
             <Form.Input
-              type='datetime-local'
-              placeholder='Date'
-              name='Date'
+              type="datetime-local"
+              placeholder="Date"
+              name="Date"
               value={activity.Date}
               onChange={handleInputChange}
             />
             <Form.Input
-              placeholder='City'
-              name='City'
+              placeholder="City"
+              name="City"
               value={activity.City}
               onChange={handleInputChange}
             />
             <Form.Input
-              placeholder='Venue'
-              name='Venue'
+              placeholder="Venue"
+              name="Venue"
               value={activity.Venue}
               onChange={handleInputChange}
             />
             <Button
-              floated='right'
+              floated="right"
               loading={submitting}
               positive
-              type='submit'
-              content='Submit'
+              type="submit"
+              content="Submit"
               onClick={() => handleSubmit()}
             />
             <Button
-              floated='right'
-              type='button'
-              content='Cancel'
-              onClick={() => history.push('/activities')}
+              floated="right"
+              type="button"
+              content="Cancel"
+              onClick={() => history.push("/activities")}
             />
           </Form>
         </Segment>

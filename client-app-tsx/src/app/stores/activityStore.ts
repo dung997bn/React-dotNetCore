@@ -2,10 +2,16 @@ import { IActivity } from "./../models/activity";
 import { observable, action, computed, configure, runInAction } from "mobx";
 import { createContext, SyntheticEvent } from "react";
 import agent from "../api/agent";
+import { RootStore } from "./rootStore";
 
-configure({ enforceActions: "always" });
 
-class ActivityStore {
+
+export default class ActivityStore {
+  rootStore: RootStore;
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
+  }
+
   @observable activityRegistry = new Map();
   @observable loadingInitial = false;
   @observable activity: IActivity | null = null;
@@ -13,10 +19,6 @@ class ActivityStore {
   @observable target = "";
 
   @computed get activitiesByDate() {
-    console.log(
-      this.groupActivitiesByDate(Array.from(this.activityRegistry.values()))
-    );
-
     return this.groupActivitiesByDate(
       Array.from(this.activityRegistry.values())
     );
@@ -139,5 +141,3 @@ class ActivityStore {
     }
   };
 }
-
-export default createContext(new ActivityStore());
