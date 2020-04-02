@@ -5,6 +5,16 @@ export interface IActivity {
     Category: string,
     Date: string,
     City: string,
-    Venue: string
+    Venue: string,
+    IsGoing: boolean,
+    IsHost: boolean,
+    UserActivities: IAttendee[]
+}
 
+
+export interface IAttendee {
+    UserName: string,
+    DisplayName: string,
+    Image: string,
+    IsHost: boolean
 }
