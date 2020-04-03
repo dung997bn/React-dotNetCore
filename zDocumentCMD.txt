@@ -3,3 +3,12 @@ dotnet ef  migrations add initialCreate
 dotnet ef  migrations add initialCreate -p Persistence/ -s API/
 dotnet watch run
 dotnet ef database drop -p Persistence -s API
+
+
+
+
+
+//Cloudinay
+dotnet user-secrets set "Cloudinay:CloudName" "dung997bn"
+dotnet user-secrets set "Cloudinay:ApiKey" "467124528224957"
+dotnet user-secrets set "Cloudinay:ApiSecret" "zJLvGUn9TfEW0T62pW9C1akoD8E"

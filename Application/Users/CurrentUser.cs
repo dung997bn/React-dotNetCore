@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Persistence;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace Application.Users
                     DisplayName = user.DisplayName,
                     Token = _jwtGenerator.CreateToken(user),
                     UserName = user.UserName,
-                    Image = ""
+                    Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
                 };
             }
         }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Persistence;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -38,7 +39,7 @@ namespace Application.Users
             private readonly UserManager<AppUser> _userManager;
 
 
-            public Handler(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
+            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
             {
                 _signInManager = signInManager;
                 _jwtGenerator = jwtGenerator;
@@ -49,20 +50,21 @@ namespace Application.Users
             {
                 //handler logic
                 var user = await _userManager.FindByEmailAsync(request.Email);
-                if(user == null)
+                if (user == null)
                 {
                     throw new RestException(HttpStatusCode.Unauthorized);
                 }
-                var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password,false);
+                var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
                 if (result.Succeeded)
                 {
                     //TODO:generate token
-                    return new User {
-                        DisplayName=user.DisplayName,
-                        Token=_jwtGenerator.CreateToken(user),
-                        UserName=user.UserName,
-                        Image=""
+                    return new User
+                    {
+                        DisplayName = user.DisplayName,
+                        Token = _jwtGenerator.CreateToken(user),
+                        UserName = user.UserName,
+                        Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
                     };
                 }
                 throw new RestException(HttpStatusCode.Unauthorized);
