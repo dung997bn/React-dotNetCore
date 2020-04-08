@@ -8,7 +8,7 @@ interface IProps {
   activity: IActivity;
 }
 const ActivityListItem: React.FC<IProps> = ({ activity }) => {
-  const host = activity.UserActivities.filter(x => x.IsHost)[0];
+  const host = activity.UserActivities.filter((x) => x.IsHost)[0];
   return (
     <Segment.Group>
       <Segment>
@@ -18,12 +18,19 @@ const ActivityListItem: React.FC<IProps> = ({ activity }) => {
               size='tiny'
               circular
               src={host.Image || '/assets/user.png'}
+              style={{ marginBottom: 3 }}
             />
             <Item.Content>
               <Item.Header as={Link} to={`/activities/${activity.Id}`}>
                 {activity.Title}
               </Item.Header>
-              <Item.Description>Hosted by {host.DisplayName}</Item.Description>
+              <Item.Description>
+                Hosted by{' '}
+                <Link to={`/profile/${host.UserName}`}>
+                  {' '}
+                  {host.DisplayName}
+                </Link>{' '}
+              </Item.Description>
               {activity.IsHost && (
                 <Item.Description>
                   <Label

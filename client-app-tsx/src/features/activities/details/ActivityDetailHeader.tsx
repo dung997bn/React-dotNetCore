@@ -3,9 +3,10 @@ import { Segment, Item, Header, Button, Image } from 'semantic-ui-react';
 import { IActivity } from '../../../app/models/activity';
 import { observer } from 'mobx-react-lite';
 import { RootStoreContext } from '../../../app/stores/rootStore';
+import { Link } from 'react-router-dom';
 
 const activityImageStyle = {
-  filter: 'brightness(30%)'
+  filter: 'brightness(30%)',
 };
 
 const activityImageTextStyle = {
@@ -14,14 +15,15 @@ const activityImageTextStyle = {
   left: '5%',
   width: '100%',
   height: 'auto',
-  color: 'white'
+  color: 'white',
 };
 
 const ActivityDetailHeader: React.FC<{ activity: IActivity }> = ({
-  activity
+  activity,
 }) => {
   const rootStore = useContext(RootStoreContext);
   const { attendActivity, cancelAttendance, loading } = rootStore.activityStore;
+  const host = activity.UserActivities.filter((x) => x.IsHost)[0];
   return (
     <Segment.Group>
       <Segment basic attached='top' style={{ padding: '0' }}>
@@ -41,7 +43,10 @@ const ActivityDetailHeader: React.FC<{ activity: IActivity }> = ({
                 />
                 <p>{activity.Date}</p>
                 <p>
-                  Hosted by <strong>Bob</strong>
+                  Hosted by{' '}
+                  <Link to={`/profile/${host.UserName}`}>
+                    <strong>{host.DisplayName}</strong>
+                  </Link>
                 </p>
               </Item.Content>
             </Item>
