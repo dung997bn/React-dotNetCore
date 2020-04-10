@@ -11,7 +11,7 @@ interface DetailParams {
 
 const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
   match,
-  history
+  history,
 }) => {
   const rootStore = useContext(RootStoreContext);
   const {
@@ -20,7 +20,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     submitting,
     activity: selectedActivity,
     loadActivityDetail,
-    clearActivity
+    clearActivity,
   } = rootStore.activityStore;
 
   const [activity, setActivity] = useState<IActivity>({
@@ -33,7 +33,8 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     Venue: '',
     IsGoing: false,
     IsHost: false,
-    UserActivities: []
+    UserActivities: [],
+    Comments: [],
   });
 
   useEffect(() => {
@@ -51,7 +52,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     clearActivity,
     match.params.Id,
     selectedActivity,
-    activity.Id.length
+    activity.Id.length,
   ]);
 
   const handleInputChange = (
@@ -65,7 +66,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     if (activity.Id.length === 0) {
       let newActivity = {
         ...activity,
-        Id: uuid()
+        Id: uuid(),
       };
       createActivity(newActivity).then(() =>
         history.push(`/activities/${newActivity.Id}`)

@@ -4,7 +4,7 @@ import { SyntheticEvent } from "react";
 import agent from "../api/agent";
 import { RootStore } from "./rootStore";
 import { setActivityProps, createAttendee } from "../common/until";
-
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr'
 export default class ActivityStore {
   rootStore: RootStore;
   constructor(rootStore: RootStore) {
@@ -17,6 +17,7 @@ export default class ActivityStore {
   @observable submitting: boolean = false;
   @observable target = "";
   @observable loading = false;
+  @observable.ref hubConnection: HubConnection | null = null;
 
   @computed get activitiesByDate() {
     return this.groupActivitiesByDate(
@@ -37,6 +38,38 @@ export default class ActivityStore {
         return activities;
       }, {} as { [key: string]: IActivity[] })
     );
+  }
+
+  @action createHubConnection = () => {
+    this.hubConnection = new HubConnectionBuilder().withUrl('http://localhost:5000/chat', {
+      accessTokenFactory: () => this.rootStore.commonStore.token!
+    }).configureLogging(LogLevel.Information).build();
+
+    this.hubConnection
+      .start()
+      .then(() => console.log(this.hubConnection!.state))
+      .catch(error => console.log('Error when establishing connection: ', error));
+
+    this.hubConnection.on("ReceiveComment", comment => {
+      console.log(comment);
+
+      runInAction(() => {
+        this.activity!.Comments.push(comment);
+      })
+    })
+  }
+
+  @action stopHubConnection = () => {
+    this.hubConnection!.stop();
+  }
+
+  @action addComment = async (values: any) => {
+    values.ActivityId = this.activity!.Id;
+    try {
+      await this.hubConnection!.invoke("SendComment", values)
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   @action loadActivities = async () => {
@@ -97,8 +130,8 @@ export default class ActivityStore {
       attendees.push(attendee);
       activity.UserActivities = attendees;
       activity.IsHost = true;
+      activity.Comments = [];
       runInAction("creating activity", () => {
-
         this.activityRegistry.set(activity.Id, activity);
         this.submitting = false;
       });

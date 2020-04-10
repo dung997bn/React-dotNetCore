@@ -8,9 +8,17 @@ export interface IActivity {
     Venue: string,
     IsGoing: boolean,
     IsHost: boolean,
-    UserActivities: IAttendee[]
+    UserActivities: IAttendee[],
+    Comments: IComment[]
 }
-
+export interface IComment {
+    Id: string,
+    Body: string,
+    UserName: string,
+    DisplayName: string,
+    Image: string,
+    CreateAt: Date
+}
 
 export interface IAttendee {
     UserName: string,
